@@ -57,9 +57,16 @@ body {
   background: linear-gradient(135deg, var(--black2) 0%, #1E1A0E 100%);
   border-bottom: 1px solid var(--gold-dim);
   padding: 0 28px;
-  display: flex; align-items: center; justify-content: space-between;
-  height: 64px;
+  display: flex; flex-direction: column; justify-content: center;
   box-shadow: 0 2px 20px rgba(0,0,0,0.6);
+}
+.topbar-row1 {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px;
+}
+.topbar-row2 {
+  display: flex; align-items: center; gap: 10px;
+  padding-bottom: 10px;
 }
 .topbar-brand {
   display: flex; align-items: center; gap: 14px;
@@ -255,13 +262,14 @@ tbody td.product-name { font-weight: 500; color: var(--gold-pale); }
 /* ── RESPONSIVE MOBILE ── */
 @media (max-width: 768px) {
   /* Topbar */
-  .topbar { padding: 0 12px; height: auto; min-height: 56px; flex-wrap: wrap; gap: 6px; padding: 8px 12px; }
+  .topbar { padding: 8px 12px; height: auto; min-height: 56px; }
+  .topbar-row1 { height: auto; padding: 2px 0 4px; }
   .topbar-brand { flex: 1; }
   .topbar-title { font-size: 1rem; }
   .topbar-nav { display: none; }
-  .topbar-actions { width: 100%; display: flex; flex-wrap: wrap; gap: 6px; padding-bottom: 4px; }
-  .topbar-actions button { font-size: 0.75rem; padding: 6px 10px; flex: 1; min-width: 0; }
-  #gsync-indicator { width: 100%; padding: 2px 0; }
+  .topbar-row2 { gap: 6px; padding-bottom: 6px; }
+  .topbar-row2 button { font-size: 0.75rem; padding: 6px 10px; }
+  #gsync-indicator { display: none !important; }
 
   /* Pages */
   .page { padding: 12px; }
@@ -639,40 +647,45 @@ tbody tr { transition: background 0.15s, opacity 0.2s; }
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <div class="topbar-brand">
-    <div style="position:relative;display:inline-block;">
-      <img id="brand-logo" src="" alt="Logo"
-        style="width:40px;height:40px;border-radius:50%;border:2px solid var(--gold);object-fit:cover;background:#1A1A0E;display:block;"
-        onerror="this.style.display='none';document.getElementById('brand-logo-fallback').style.display='flex'"/>
-      <div id="brand-logo-fallback"
-        style="width:40px;height:40px;border-radius:50%;border:2px solid var(--gold);background:#1A1A0E;display:flex;align-items:center;justify-content:center;">
-        <span style="font-family:'Playfair Display',serif;color:var(--gold2);font-weight:700;font-size:1rem;">Q</span>
+  <div class="topbar-row1">
+    <div class="topbar-brand">
+      <div style="position:relative;display:inline-block;">
+        <img id="brand-logo" src="" alt="Logo"
+          style="width:40px;height:40px;border-radius:50%;border:2px solid var(--gold);object-fit:cover;background:#1A1A0E;display:block;"
+          onerror="this.style.display='none';document.getElementById('brand-logo-fallback').style.display='flex'"/>
+        <div id="brand-logo-fallback"
+          style="width:40px;height:40px;border-radius:50%;border:2px solid var(--gold);background:#1A1A0E;display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:'Playfair Display',serif;color:var(--gold2);font-weight:700;font-size:1rem;">Q</span>
+        </div>
+        <button onclick="openLogoSettings()" title="Ganti logo"
+          style="position:absolute;bottom:-2px;right:-2px;width:16px;height:16px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;font-size:9px;color:var(--black);font-weight:700;line-height:1;">✎</button>
       </div>
-      <button onclick="openLogoSettings()" title="Ganti logo"
-        style="position:absolute;bottom:-2px;right:-2px;width:16px;height:16px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;font-size:9px;color:var(--black);font-weight:700;line-height:1;">✎</button>
+      <div>
+        <div class="topbar-title">Queen <span>Plastic</span></div>
+        <div style="font-size:0.7rem;color:var(--gray);letter-spacing:0.05em;">DASHBOARD PENJUALAN</div>
+      </div>
     </div>
-    <div>
-      <div class="topbar-title">Queen <span>Plastic</span></div>
-      <div style="font-size:0.7rem;color:var(--gray);letter-spacing:0.05em;">DASHBOARD PENJUALAN</div>
+    <nav class="topbar-nav">
+      <button class="nav-btn active" onclick="showPage('dashboard')">Dashboard</button>
+      <button class="nav-btn" onclick="showPage('input')">Input Data</button>
+      <button class="nav-btn" onclick="showPage('harian')">Detail Harian</button>
+      <button class="nav-btn" onclick="showPage('bulanan')">Rekapan Bulanan</button>
+      <button class="nav-btn" onclick="showPage('tahunan')">Rekapan Tahunan</button>
+      <button class="nav-btn" onclick="showPage('produk')">Produk</button>
+      <button class="nav-btn" onclick="showPage('stok')">Stok</button>
+    </nav>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div id="gsync-indicator" style="display:flex;align-items:center;padding:0 8px;"></div>
+      <button id="pwa-install-btn" onclick="installPWA()" title="Install sebagai aplikasi"
+        style="display:none;align-items:center;gap:6px;background:linear-gradient(135deg,var(--gold),var(--gold3));color:var(--black);font-weight:700;font-size:0.78rem;border:none;cursor:pointer;border-radius:8px;padding:7px 14px;letter-spacing:0.03em;">
+        Install App
+      </button>
+      <button class="btn-outline" onclick="resetAndPull()" title="Refresh data dari Google Sheets" style="font-size:0.8rem;">🔄 REFRESH</button>
     </div>
   </div>
-  <nav class="topbar-nav">
-    <button class="nav-btn active" onclick="showPage('dashboard')">Dashboard</button>
-    <button class="nav-btn" onclick="showPage('input')">Input Data</button>
-    <button class="nav-btn" onclick="showPage('harian')">Detail Harian</button>
-    <button class="nav-btn" onclick="showPage('bulanan')">Rekapan Bulanan</button>
-    <button class="nav-btn" onclick="showPage('tahunan')">Rekapan Tahunan</button>
-    <button class="nav-btn" onclick="showPage('produk')">Produk</button>
-    <button class="nav-btn" onclick="showPage('stok')">Stok</button>
-  </nav>
-  <div class="topbar-actions">
-    <div id="gsync-indicator" style="display:flex;align-items:center;padding:0 8px;"></div>
-    <button id="pwa-install-btn" onclick="installPWA()" title="Install sebagai aplikasi"
-  style="display:none;align-items:center;gap:6px;background:linear-gradient(135deg,var(--gold),var(--gold3));color:var(--black);font-weight:700;font-size:0.78rem;border:none;cursor:pointer;border-radius:8px;padding:7px 14px;letter-spacing:0.03em;">
-  Install App
-</button>
-    <button class="btn-outline" onclick="resetAndPull()" title="Refresh data dari Google Sheets" style="font-size:0.8rem;">REFRESH</button>
-    <button class="btn-gold" onclick="showPage('input')">+ Input Penjualan</button>
+  <div class="topbar-row2">
+    <button class="btn-gold" onclick="showPage('input')" style="flex:1;">+ Input Penjualan</button>
+    <button class="btn-outline" onclick="showPage('stok')" style="flex:1;">+ Input Stok</button>
   </div>
 </div>
 
@@ -827,6 +840,21 @@ tbody tr { transition: background 0.15s, opacity 0.2s; }
     <div><h2>Detail Harian</h2><div class="subtitle">Rincian penjualan per tanggal</div></div>
   </div>
   <div class="month-tabs" id="harian-month-tabs"></div>
+
+  <!-- GRAFIK OMZET PER PRODUK -->
+  <div class="chart-card" style="margin-bottom:20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+      <div class="chart-title" style="margin-bottom:0">Top Produk Bulan Ini</div>
+      <div style="display:flex;background:var(--black3);border-radius:8px;border:1px solid rgba(201,168,76,0.2);overflow:hidden;">
+        <button id="harian-chart-omzet-btn" onclick="setHarianChartMode('omzet')"
+          style="padding:6px 14px;font-size:0.78rem;font-weight:600;cursor:pointer;border:none;background:var(--gold);color:var(--black);font-family:'DM Sans',sans-serif;transition:all 0.2s;">Omzet</button>
+        <button id="harian-chart-qty-btn" onclick="setHarianChartMode('qty')"
+          style="padding:6px 14px;font-size:0.78rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--gray);font-family:'DM Sans',sans-serif;transition:all 0.2s;">Qty</button>
+      </div>
+    </div>
+    <canvas id="chart-harian-produk" style="max-height:240px"></canvas>
+  </div>
+
   <div class="filter-bar">
     <div class="filter-group">
       <label>Cari Produk</label>
@@ -842,6 +870,34 @@ tbody tr { transition: background 0.15s, opacity 0.2s; }
     <div class="gold-line"></div>
     <div><h2>Rekapan Bulanan</h2><div class="subtitle">Ringkasan penjualan per produk per bulan</div></div>
   </div>
+
+  <!-- GRAFIK OMZET HARIAN -->
+  <div class="chart-card" style="margin-bottom:20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+      <div class="chart-title" style="margin-bottom:0">Omzet Harian</div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <!-- Toggle Omzet/Qty -->
+        <div style="display:flex;background:var(--black3);border-radius:8px;border:1px solid rgba(201,168,76,0.2);overflow:hidden;">
+          <button id="bulanan-chart-omzet-btn" onclick="setBulananChartMode('omzet')"
+            style="padding:6px 14px;font-size:0.78rem;font-weight:600;cursor:pointer;border:none;background:var(--gold);color:var(--black);font-family:'DM Sans',sans-serif;transition:all 0.2s;">Omzet</button>
+          <button id="bulanan-chart-qty-btn" onclick="setBulananChartMode('qty')"
+            style="padding:6px 14px;font-size:0.78rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--gray);font-family:'DM Sans',sans-serif;transition:all 0.2s;">Qty</button>
+        </div>
+        <!-- Pilih Bulan -->
+        <select id="bulanan-chart-month" onchange="renderBulananChart()"
+          style="background:var(--black3);border:1px solid rgba(201,168,76,0.25);color:var(--white);border-radius:8px;padding:6px 12px;font-family:'DM Sans',sans-serif;font-size:0.85rem;outline:none;">
+          <option value="0">Januari</option><option value="1">Februari</option>
+          <option value="2">Maret</option><option value="3">April</option>
+          <option value="4">Mei</option><option value="5">Juni</option>
+          <option value="6">Juli</option><option value="7">Agustus</option>
+          <option value="8">September</option><option value="9">Oktober</option>
+          <option value="10">November</option><option value="11">Desember</option>
+        </select>
+      </div>
+    </div>
+    <canvas id="chart-bulanan-harian" style="max-height:240px"></canvas>
+  </div>
+
   <div class="filter-bar">
     <div class="filter-group">
       <label>Cari Produk</label>
@@ -896,14 +952,24 @@ tbody tr { transition: background 0.15s, opacity 0.2s; }
     <div class="gold-line"></div>
     <div><h2>Master Produk</h2><div class="subtitle">Daftar 189 produk dengan harga</div></div>
   </div>
-  <div class="filter-bar">
-    <div class="filter-group">
-      <label>Cari Produk</label>
-      <input type="text" id="produk-search" placeholder="Cari nama produk..." oninput="renderProduk()" />
+  <div class="filter-bar" style="flex-direction:column;gap:10px;">
+    <!-- Baris 1: Input Produk | Link Google Sheet -->
+    <div style="display:flex;gap:10px;width:100%;align-items:center;">
+      <button class="btn-gold" onclick="openInputProdukModal()" style="flex:1;padding:8px 18px;">+ Input Produk</button>
+      <a href="https://docs.google.com/spreadsheets/d/1FBeWRu4dp9cF705x1mLcC3ZVmKboa80UbYu8_Z_gLBU/edit?usp=drivesdk"
+        target="_blank" rel="noopener"
+        style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(66,133,244,0.12);border:1px solid rgba(66,133,244,0.35);color:#64B5F6;font-weight:600;font-size:0.82rem;border-radius:8px;padding:8px 18px;text-decoration:none;letter-spacing:0.04em;transition:all 0.2s;text-transform:uppercase;"
+        onmouseover="this.style.background='rgba(66,133,244,0.22)'" onmouseout="this.style.background='rgba(66,133,244,0.12)'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" stroke="#64B5F6" stroke-width="1.8"/><path d="M8 12h8M12 8v8" stroke="#64B5F6" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Google Sheet
+      </a>
     </div>
-    <div class="filter-group" style="justify-content:flex-end;margin-left:auto;">
-      <label style="opacity:0">.</label>
-      <button class="btn-gold" onclick="openEditHargaModal()" style="padding:8px 18px;">Edit Harga Produk</button>
+    <!-- Baris 2: Edit Harga Produk | Cari Produk -->
+    <div style="display:flex;gap:10px;width:100%;align-items:center;">
+      <button class="btn-outline" onclick="openEditHargaModal()" style="flex:1;padding:8px 18px;">✎ Edit Harga Produk</button>
+      <div class="filter-group" style="flex:1;margin:0;">
+        <input type="text" id="produk-search" placeholder="🔍 Cari nama produk..." oninput="renderProduk()" style="width:100%;" />
+      </div>
     </div>
   </div>
   <div class="table-wrap">
@@ -1137,6 +1203,49 @@ tbody tr { transition: background 0.15s, opacity 0.2s; }
         <button class="btn-outline" onclick="closeLogoModal()">Batal</button>
         <button class="btn-gold" onclick="applyLogo()">Simpan</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: INPUT PRODUK BARU -->
+<div id="input-produk-modal" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.75);align-items:center;justify-content:center;">
+  <div style="background:var(--black2);border:1px solid var(--gold);border-radius:16px;padding:28px;max-width:480px;width:95%;box-shadow:0 20px 60px rgba(0,0,0,0.8);position:relative;">
+    <button onclick="document.getElementById('input-produk-modal').style.display='none'" style="position:absolute;top:14px;right:16px;background:none;border:none;color:var(--gray);font-size:1.4rem;cursor:pointer;">×</button>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+      <div style="width:4px;height:36px;background:linear-gradient(to bottom,var(--gold),var(--gold3));border-radius:2px;"></div>
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold2);font-weight:700;">Input Produk Baru</div>
+        <div style="font-size:0.78rem;color:var(--gray);">Tambah produk ke Master Produk</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:16px;">
+      <div class="form-group">
+        <label>Nama Produk *</label>
+        <input type="text" id="ip-nama" placeholder="Contoh: KANTONG PLASTIK 25X35" style="width:100%" />
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="form-group">
+          <label>Harga Modal (Rp)</label>
+          <input type="number" id="ip-modal" min="0" step="500" placeholder="0" style="width:100%" />
+        </div>
+        <div class="form-group">
+          <label>Isi per Pack</label>
+          <input type="number" id="ip-isi" min="0" step="1" placeholder="0" style="width:100%" />
+        </div>
+        <div class="form-group">
+          <label>Harga Jual Pack ✦</label>
+          <input type="number" id="ip-pck" min="0" step="500" placeholder="0" style="width:100%;border-color:rgba(201,168,76,0.5)" />
+        </div>
+        <div class="form-group">
+          <label>Harga Jual Eceran</label>
+          <input type="number" id="ip-ecr" min="0" step="100" placeholder="0 = Pack Only" style="width:100%" />
+        </div>
+      </div>
+    </div>
+    <div id="ip-alert" style="display:none;background:rgba(229,57,53,0.12);border:1px solid rgba(229,57,53,0.3);color:#EF9A9A;border-radius:8px;padding:10px 14px;font-size:0.83rem;margin-bottom:14px;"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button class="btn-outline" onclick="document.getElementById('input-produk-modal').style.display='none'">Batal</button>
+      <button class="btn-gold" onclick="saveInputProdukBaru()">Simpan Produk</button>
     </div>
   </div>
 </div>
@@ -1963,11 +2072,13 @@ function initHarian() {
     `<button class="month-tab ${i === harianMonth ? 'active' : ''}" onclick="setHarianMonth(${i})">${m.substring(0,3)}</button>`
   ).join('');
   renderHarian();
+  renderHarianChart();
 }
 function setHarianMonth(i) {
   harianMonth = i;
   document.querySelectorAll('.month-tab').forEach((b, idx) => b.classList.toggle('active', idx === i));
   renderHarian();
+  renderHarianChart();
 }
 function renderHarian() {
   const search = document.getElementById('harian-search').value.toLowerCase();
@@ -2020,6 +2131,13 @@ function renderHarian() {
 let bulananPage = 0;
 const BULANAN_PER_PAGE = 30;
 function renderBulanan() {
+  // Set default chart month to current month
+  const sel = document.getElementById('bulanan-chart-month');
+  if (sel && !sel._initialized) {
+    sel.value = new Date().getMonth();
+    sel._initialized = true;
+  }
+  renderBulananChart();
   bulananPage = 0;
   renderBulananPage();
 }
@@ -2135,6 +2253,138 @@ function renderTahunan() {
       }]
     },
     options: chartOptions('Rp')
+  });
+}
+
+// ── GRAFIK BULANAN HARIAN ──
+let bulananChartMode = 'omzet'; // 'omzet' | 'qty'
+
+function setBulananChartMode(mode) {
+  bulananChartMode = mode;
+  const btnOmzet = document.getElementById('bulanan-chart-omzet-btn');
+  const btnQty   = document.getElementById('bulanan-chart-qty-btn');
+  if (btnOmzet && btnQty) {
+    btnOmzet.style.background = mode === 'omzet' ? 'var(--gold)' : 'transparent';
+    btnOmzet.style.color      = mode === 'omzet' ? 'var(--black)' : 'var(--gray)';
+    btnQty.style.background   = mode === 'qty'   ? 'var(--gold)' : 'transparent';
+    btnQty.style.color        = mode === 'qty'   ? 'var(--black)' : 'var(--gray)';
+  }
+  renderBulananChart();
+}
+
+function renderBulananChart() {
+  const sel = document.getElementById('bulanan-chart-month');
+  if (!sel) return;
+  const monthIdx = parseInt(sel.value);
+
+  // Aggregate by day for selected month
+  const data = salesData.filter(d => d.bulan === monthIdx);
+  const byDay = {};
+  for (const d of data) {
+    const day = parseInt((d.tanggal || '').split('-')[2]) || 0;
+    if (!day) continue;
+    if (!byDay[day]) byDay[day] = { omzet: 0, qty: 0 };
+    byDay[day].omzet += d.omzet || 0;
+    byDay[day].qty += (d.pck || 0) + (d.ecr || 0);
+  }
+
+  const days = MONTH_DAYS[monthIdx];
+  const labels = Array.from({length: days}, (_, i) => i + 1);
+  const values = labels.map(d => byDay[d] ? byDay[d][bulananChartMode] : 0);
+  const maxVal  = Math.max(...values, 1);
+
+  destroyChart('chart-bulanan-harian');
+  charts['chart-bulanan-harian'] = new Chart(document.getElementById('chart-bulanan-harian'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: bulananChartMode === 'omzet' ? 'Omzet (Rp)' : 'Qty',
+        data: values,
+        backgroundColor: values.map(v => v === maxVal && maxVal > 0 ? 'rgba(240,212,122,0.95)' : 'rgba(201,168,76,0.55)'),
+        borderColor: 'rgba(201,168,76,0.8)',
+        borderWidth: 1,
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      ...chartOptions(bulananChartMode === 'omzet' ? 'Rp' : ''),
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => bulananChartMode === 'omzet'
+              ? 'Omzet: ' + rp(ctx.parsed.y)
+              : 'Qty: ' + fmt(ctx.parsed.y)
+          }
+        }
+      }
+    }
+  });
+}
+
+// ── GRAFIK HARIAN PER PRODUK ──
+let harianChartMode = 'omzet'; // 'omzet' | 'qty'
+
+function setHarianChartMode(mode) {
+  harianChartMode = mode;
+  const btnOmzet = document.getElementById('harian-chart-omzet-btn');
+  const btnQty   = document.getElementById('harian-chart-qty-btn');
+  if (btnOmzet && btnQty) {
+    btnOmzet.style.background = mode === 'omzet' ? 'var(--gold)' : 'transparent';
+    btnOmzet.style.color      = mode === 'omzet' ? 'var(--black)' : 'var(--gray)';
+    btnQty.style.background   = mode === 'qty'   ? 'var(--gold)' : 'transparent';
+    btnQty.style.color        = mode === 'qty'   ? 'var(--black)' : 'var(--gray)';
+  }
+  renderHarianChart();
+}
+
+function renderHarianChart() {
+  const data = salesData.filter(d => d.bulan === harianMonth);
+  const prodMap = {};
+  for (const d of data) {
+    if (!prodMap[d.produk]) prodMap[d.produk] = { omzet: 0, qty: 0 };
+    prodMap[d.produk].omzet += d.omzet || 0;
+    prodMap[d.produk].qty += (d.pck || 0) + (d.ecr || 0);
+  }
+
+  const sorted = Object.entries(prodMap)
+    .sort((a, b) => b[1][harianChartMode] - a[1][harianChartMode])
+    .slice(0, 15);
+
+  const labels = sorted.map(([k]) => k.length > 20 ? k.substring(0, 20) + '…' : k);
+  const values = sorted.map(([, v]) => v[harianChartMode]);
+
+  destroyChart('chart-harian-produk');
+  if (!sorted.length) return;
+
+  charts['chart-harian-produk'] = new Chart(document.getElementById('chart-harian-produk'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: harianChartMode === 'omzet' ? 'Omzet (Rp)' : 'Qty',
+        data: values,
+        backgroundColor: 'rgba(201,168,76,0.65)',
+        borderColor: 'rgba(201,168,76,0.9)',
+        borderWidth: 1,
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      ...chartOptions(harianChartMode === 'omzet' ? 'Rp' : ''),
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => harianChartMode === 'omzet'
+              ? 'Omzet: ' + rp(ctx.parsed.x)
+              : 'Qty: ' + fmt(ctx.parsed.x)
+          }
+        }
+      }
+    }
   });
 }
 
@@ -2333,6 +2583,37 @@ function openEditHargaModal() {
   document.getElementById('eh-search').value = '';
   renderEhTable();
   document.getElementById('edit-harga-modal').style.display = 'flex';
+}
+
+// ── INPUT PRODUK BARU ──
+function openInputProdukModal() {
+  ['ip-nama','ip-modal','ip-isi','ip-pck','ip-ecr'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('ip-alert').style.display = 'none';
+  document.getElementById('input-produk-modal').style.display = 'flex';
+}
+
+function saveInputProdukBaru() {
+  const nama  = document.getElementById('ip-nama').value.trim().toUpperCase();
+  const modal = parseInt(document.getElementById('ip-modal').value) || 0;
+  const isi   = parseInt(document.getElementById('ip-isi').value)   || 0;
+  const pck   = parseInt(document.getElementById('ip-pck').value)   || 0;
+  const ecr   = parseInt(document.getElementById('ip-ecr').value)   || 0;
+  const alert = document.getElementById('ip-alert');
+
+  if (!nama) { alert.textContent = 'Nama produk wajib diisi!'; alert.style.display = 'block'; return; }
+  if (!pck)  { alert.textContent = 'Harga Jual Pack wajib diisi!'; alert.style.display = 'block'; return; }
+  if (PRODUCTS.find(p => p.nama.toUpperCase() === nama)) {
+    alert.textContent = 'Produk "' + nama + '" sudah ada di daftar!'; alert.style.display = 'block'; return;
+  }
+  alert.style.display = 'none';
+
+  PRODUCTS.push({ nama, harga_modal: modal, harga_jual_pck: pck, harga_jual_ecr: ecr, isi_per_pack: isi });
+  PRODUCTS.sort((a, b) => a.nama.localeCompare(b.nama));
+  document.getElementById('input-produk-modal').style.display = 'none';
+  renderProduk();
+  showAlert('✅ Produk "' + nama + '" berhasil ditambahkan!', 'success');
 }
 
 function renderEhTable() {
