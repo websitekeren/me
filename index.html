@@ -732,40 +732,6 @@ tbody tr { transition: background 0.15s, opacity 0.2s; }
   </div>
 
   <!-- PROFIT MODAL -->
-  <div id="profit-modal" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
-    <div style="background:var(--black2);border:1px solid rgba(201,168,76,0.3);border-radius:16px;padding:28px;width:90%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,0.8);position:relative;">
-      <button onclick="document.getElementById('profit-modal').style.display='none'"
-        style="position:absolute;top:14px;right:16px;background:none;border:none;color:var(--gray);font-size:1.4rem;cursor:pointer;line-height:1;">×</button>
-      <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--gold2);margin-bottom:4px;">Detail Keuntungan</div>
-      <div id="profit-modal-period" style="font-size:0.8rem;color:var(--gray);margin-bottom:20px;"></div>
-
-      <!-- Total Keuntungan -->
-      <div style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:10px;padding:16px 18px;margin-bottom:16px;">
-        <div style="font-size:0.76rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Total Keuntungan Bersih</div>
-        <div id="profit-total" style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold2);">Rp 0</div>
-        <div id="profit-margin-pct" style="font-size:0.82rem;color:var(--gray);margin-top:4px;"></div>
-      </div>
-
-      <!-- Keuntungan Pack & Eceran -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
-        <div style="background:var(--black3);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:14px 16px;">
-          <div style="font-size:0.72rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;">Keuntungan Pack</div>
-          <div id="profit-pack" style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:#81C784;">Rp 0</div>
-          <div id="profit-pack-sub" style="font-size:0.76rem;color:var(--gray);margin-top:3px;"></div>
-        </div>
-        <div style="background:var(--black3);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:14px 16px;">
-          <div style="font-size:0.72rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;">Keuntungan Eceran</div>
-          <div id="profit-ecr" style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:#64B5F6;">Rp 0</div>
-          <div id="profit-ecr-sub" style="font-size:0.76rem;color:var(--gray);margin-top:3px;"></div>
-        </div>
-      </div>
-
-      <!-- Info -->
-      <div style="font-size:0.76rem;color:var(--gray2);text-align:center;border-top:1px solid rgba(255,255,255,0.06);padding-top:12px;">
-        Pack: (Harga Jual Pack − Harga Modal) × Qty · Eceran: (Harga Jual Ecr − Harga Modal÷Isi) × Qty
-      </div>
-    </div>
-  </div>
 
   <div class="chart-grid">
     <div class="chart-card wide">
@@ -3295,6 +3261,41 @@ setTimeout(hideLoadingScreen, 8000);
     </div>
   </div>
 </div>
+
+  <div id="profit-modal" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+    <div style="background:var(--black2);border:1px solid rgba(201,168,76,0.3);border-radius:16px;padding:28px;width:90%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,0.8);position:relative;">
+      <button onclick="document.getElementById('profit-modal').style.display='none'"
+        style="position:absolute;top:14px;right:16px;background:none;border:none;color:var(--gray);font-size:1.4rem;cursor:pointer;line-height:1;">×</button>
+      <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--gold2);margin-bottom:4px;">Detail Keuntungan</div>
+      <div id="profit-modal-period" style="font-size:0.8rem;color:var(--gray);margin-bottom:20px;"></div>
+
+      <!-- Total Keuntungan -->
+      <div style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:10px;padding:16px 18px;margin-bottom:16px;">
+        <div style="font-size:0.76rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Total Keuntungan Bersih</div>
+        <div id="profit-total" style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold2);">Rp 0</div>
+        <div id="profit-margin-pct" style="font-size:0.82rem;color:var(--gray);margin-top:4px;"></div>
+      </div>
+
+      <!-- Keuntungan Pack & Eceran -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div style="background:var(--black3);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:14px 16px;">
+          <div style="font-size:0.72rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;">Keuntungan Pack</div>
+          <div id="profit-pack" style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:#81C784;">Rp 0</div>
+          <div id="profit-pack-sub" style="font-size:0.76rem;color:var(--gray);margin-top:3px;"></div>
+        </div>
+        <div style="background:var(--black3);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:14px 16px;">
+          <div style="font-size:0.72rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;">Keuntungan Eceran</div>
+          <div id="profit-ecr" style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:#64B5F6;">Rp 0</div>
+          <div id="profit-ecr-sub" style="font-size:0.76rem;color:var(--gray);margin-top:3px;"></div>
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div style="font-size:0.76rem;color:var(--gray2);text-align:center;border-top:1px solid rgba(255,255,255,0.06);padding-top:12px;">
+        Pack: (Harga Jual Pack − Harga Modal) × Qty · Eceran: (Harga Jual Ecr − Harga Modal÷Isi) × Qty
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
