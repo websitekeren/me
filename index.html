@@ -680,11 +680,11 @@ tbody tr { transition: background 0.15s, opacity 0.2s; }
         style="display:none;align-items:center;gap:6px;background:linear-gradient(135deg,var(--gold),var(--gold3));color:var(--black);font-weight:700;font-size:0.78rem;border:none;cursor:pointer;border-radius:8px;padding:7px 14px;letter-spacing:0.03em;">
         Install App
       </button>
-      <button class="btn-outline" onclick="resetAndPull()" title="Refresh data dari Google Sheets" style="font-size:0.8rem;">🔄 REFRESH</button>
+      <button class="btn-gold" onclick="resetAndPull()" title="Refresh data dari Google Sheets" style="font-size:0.8rem;">REFRESH</button>
     </div>
   </div>
   <div class="topbar-row2">
-    <button class="btn-gold" onclick="showPage('input')" style="flex:1;">+ Input Penjualan</button>
+    <button class="btn-outline" onclick="showPage('input')" style="flex:1;">+ Input Penjualan</button>
     <button class="btn-outline" onclick="showPage('stok')" style="flex:1;">+ Input Stok</button>
   </div>
 </div>
@@ -954,21 +954,20 @@ tbody tr { transition: background 0.15s, opacity 0.2s; }
   </div>
   <div class="filter-bar" style="flex-direction:column;gap:10px;">
     <!-- Baris 1: Input Produk | Link Google Sheet -->
-    <div style="display:flex;gap:10px;width:100%;align-items:center;">
-      <button class="btn-gold" onclick="openInputProdukModal()" style="flex:1;padding:8px 18px;">+ Input Produk</button>
+    <div style="display:flex;gap:10px;width:100%;align-items:stretch;">
+      <button class="btn-gold" onclick="openInputProdukModal()" style="flex:1;padding:10px 18px;min-height:44px;">+ Input Produk</button>
       <a href="https://docs.google.com/spreadsheets/d/1FBeWRu4dp9cF705x1mLcC3ZVmKboa80UbYu8_Z_gLBU/edit?usp=drivesdk"
         target="_blank" rel="noopener"
-        style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(66,133,244,0.12);border:1px solid rgba(66,133,244,0.35);color:#64B5F6;font-weight:600;font-size:0.82rem;border-radius:8px;padding:8px 18px;text-decoration:none;letter-spacing:0.04em;transition:all 0.2s;text-transform:uppercase;"
+        style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(66,133,244,0.12);border:1px solid rgba(66,133,244,0.35);color:#64B5F6;font-weight:600;font-size:0.82rem;border-radius:8px;padding:10px 18px;text-decoration:none;letter-spacing:0.04em;transition:all 0.2s;text-transform:uppercase;min-height:44px;"
         onmouseover="this.style.background='rgba(66,133,244,0.22)'" onmouseout="this.style.background='rgba(66,133,244,0.12)'">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><path d="M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" stroke="#64B5F6" stroke-width="1.8"/><path d="M8 12h8M12 8v8" stroke="#64B5F6" stroke-width="1.8" stroke-linecap="round"/></svg>
         Google Sheet
       </a>
     </div>
     <!-- Baris 2: Edit Harga Produk | Cari Produk -->
-    <div style="display:flex;gap:10px;width:100%;align-items:center;">
-      <button class="btn-outline" onclick="openEditHargaModal()" style="flex:1;padding:8px 18px;">✎ Edit Harga Produk</button>
+    <div style="display:flex;gap:10px;width:100%;align-items:stretch;">
+      <button class="btn-outline" onclick="openEditHargaModal()" style="flex:1;padding:10px 18px;min-height:44px;">✎ Edit Harga Produk</button>
       <div class="filter-group" style="flex:1;margin:0;">
-        <input type="text" id="produk-search" placeholder="🔍 Cari nama produk..." oninput="renderProduk()" style="width:100%;" />
+        <input type="text" id="produk-search" placeholder="Cari nama produk..." oninput="renderProduk()" style="width:100%;min-height:44px;box-sizing:border-box;" />
       </div>
     </div>
   </div>
@@ -1003,7 +1002,7 @@ tbody tr { transition: background 0.15s, opacity 0.2s; }
   <!-- Form Input Stok Masuk (Multi-Item) -->
   <div class="form-card" id="stok-form-card" style="margin-bottom:20px">
     <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;" onclick="toggleStokForm()">
-      <h3 style="margin-bottom:0;border-bottom:none;padding-bottom:0;">Input Stok Masuk</h3>
+      <h3 style="margin-bottom:0;border-bottom:none;padding-bottom:0;">INPUT STOK MASUK</h3>
       <span id="stok-form-toggle-icon" style="font-size:1.2rem;color:var(--gold2);transition:transform 0.3s;">▲</span>
     </div>
     <div id="stok-form-body" style="margin-top:16px;">
@@ -2594,7 +2593,7 @@ function openInputProdukModal() {
   document.getElementById('input-produk-modal').style.display = 'flex';
 }
 
-function saveInputProdukBaru() {
+async function saveInputProdukBaru() {
   const nama  = document.getElementById('ip-nama').value.trim().toUpperCase();
   const modal = parseInt(document.getElementById('ip-modal').value) || 0;
   const isi   = parseInt(document.getElementById('ip-isi').value)   || 0;
@@ -2613,7 +2612,26 @@ function saveInputProdukBaru() {
   PRODUCTS.sort((a, b) => a.nama.localeCompare(b.nama));
   document.getElementById('input-produk-modal').style.display = 'none';
   renderProduk();
-  showAlert('✅ Produk "' + nama + '" berhasil ditambahkan!', 'success');
+  showAlert('⏳ Menyimpan produk ke Google Sheets...', 'success');
+
+  // Kirim ke Google Sheets — hanya append 1 baris baru, tidak ganggu produk lain
+  if (GAS_URL) {
+    try {
+      await fetch(GAS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({
+          action: 'addProduk',
+          nama, harga_modal: modal, harga_jual_pck: pck, harga_jual_ecr: ecr, isi_per_pack: isi
+        })
+      });
+      showAlert('✅ Produk "' + nama + '" berhasil disimpan ke Google Sheets!', 'success');
+    } catch(e) {
+      showAlert('⚠️ Produk ditambahkan lokal, gagal kirim ke Sheets.', false);
+    }
+  } else {
+    showAlert('✅ Produk "' + nama + '" berhasil ditambahkan!', 'success');
+  }
 }
 
 function renderEhTable() {
